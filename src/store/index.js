@@ -58,6 +58,7 @@ export default new Vuex.Store({
         timerProgressBar: true,
         showConfirmButton: false
       })
+      console.log(this.state.currentQuestion)
       if (this.state.currentQuestion === 9) {
         Vue.swal({
           title: 'Success',
@@ -82,6 +83,16 @@ export default new Vuex.Store({
         timerProgressBar: true,
         showConfirmButton: false
       })
+      if (this.state.currentQuestion === 9) {
+        Vue.swal({
+          title: 'Success',
+          text: `Your current score ${this.state.currentScore}`,
+          icon: 'success'
+        })
+        this.state.playerName = ''
+        this.state.currentScore = 0
+        router.push('/')
+      }
     }
   },
   modules: {
