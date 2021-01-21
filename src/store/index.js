@@ -12,7 +12,9 @@ export default new Vuex.Store({
     currentQuestion: 0,
     currentScore: 0,
     timer: null,
-    start: false
+    start: false,
+    timeLeft: 0,
+    timerInstance: 0
   },
   mutations: {
     setPlayerName (state, payload) {
@@ -29,6 +31,18 @@ export default new Vuex.Store({
     },
     setMinusScore (state, payload) {
       state.currentScore -= payload
+    },
+    setTimer (state, payload) {
+      state.timer = payload
+    },
+    setTimerStart (state, payload) {
+      state.start = payload
+    },
+    setTimeLeft (state, payload) {
+      state.timeLeft = payload
+    },
+    decreaseTimeLeft (state) {
+      state.timeLeft -= 1
     }
   },
   actions: {
@@ -50,6 +64,8 @@ export default new Vuex.Store({
     setPlayerScore (context, payload) {
       context.commit('setScore', payload)
       context.commit('setCurrentQuestion')
+      clearInterval(this.state.timerInstance)
+      context.commit('setTimer', 0)
       Vue.swal({
         title: 'Success',
         text: 'Nice ez +10 pts',
@@ -75,6 +91,8 @@ export default new Vuex.Store({
     setPlayerScoreMinus (context, payload) {
       context.commit('setMinusScore', payload)
       context.commit('setCurrentQuestion')
+      clearInterval(this.state.timerInstance)
+      context.commit('setTimer', 0)
       Vue.swal({
         title: 'Error',
         text: 'Wrong answer ez -10 pts',
@@ -98,20 +116,21 @@ export default new Vuex.Store({
     },
     countDown (context) {
       context.dispatch('started')
-      var timeleft = 10
-      var Timer = setInterval(() => {
-        if (timeleft <= 0) {
-          clearInterval(Timer)
+      context.commit('setTimeLeft', 10)
+      this.state.timerInstance = setInterval(() => {
+        if (this.state.timeLeft <= 0) {
+          clearInterval(this.state.timerInstance)
           context.commit('setCurrentQuestion')
           return context.dispatch('countDown')
         } else {
-          this.state.timer = timeleft
+          context.commit('setTimer', this.state.timeLeft)
         }
-        timeleft -= 1
+        context.commit('decreaseTimeLeft')
       }, 1000)
     },
-    started () {
-      this.state.start = true
+    started (context) {
+      // this.state.start = true
+      context.commit('setTimerStart', true)
     }
   },
   modules: {

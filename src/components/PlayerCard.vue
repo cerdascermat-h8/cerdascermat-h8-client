@@ -27,7 +27,7 @@
                   <button class="btn btn-primary btn-block" @click.prevent="countDown">START</button>
               </div>
               <div id="timer" v-if="getStart === true">
-                  <p><span>{{getTimer}}</span>s</p>
+                  <p><span>{{getTimer}}</span>{{getTimer > 0 ? 's' : ''}}</p>
               </div>
           </div>
       </div>
