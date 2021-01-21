@@ -56,6 +56,7 @@ export default {
       this.$store.dispatch('fetchQuestions')
     },
     selectAnswer (value) {
+      this.$store.dispatch('countDown')
       const correctAnswer = this.currentQuestion.correct_answer
       console.log(correctAnswer)
       if (correctAnswer === value) {

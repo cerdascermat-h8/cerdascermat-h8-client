@@ -14,38 +14,7 @@
       </div>
     </div> -->
     <div class="container bg">
-      <div class="d-flex flex-row player-timer">
-          <div id="grup-player" class="d-flex flex-row">
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
-                  <div id="image-player"></div>
-                  <div id="score-player"> <h2>{{ getScore }}</h2> </div>
-              </div>
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
-                  <div id="image-player1"></div>
-                  <div id="score-player"> <h2>0</h2> </div>
-              </div>
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
-                  <div id="image-player"></div>
-                  <div id="score-player"> <h2>0</h2> </div>
-              </div>
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
-                  <div id="image-player1"></div>
-                  <div id="score-player"> <h2>0</h2> </div>
-              </div>
-          </div>
-          <div id="timer-board">
-              <div id="start-btn">
-                  <button class="btn btn-primary btn-block">START</button>
-              </div>
-              <div id="timer">
-                  <p><span>10</span>s</p>
-              </div>
-          </div>
-      </div>
+      <player-card />
       <question-board />
     </div>
   </div>
@@ -53,16 +22,12 @@
 
 <script>
 import QuestionBoard from '../components/QuestionBoard'
-
+import PlayerCard from '../components/PlayerCard'
 export default {
   name: 'MainGame',
   components: {
-    QuestionBoard
-  },
-  computed: {
-    getScore () {
-      return this.$store.state.currentScore
-    }
+    QuestionBoard,
+    PlayerCard
   }
 }
 </script>
