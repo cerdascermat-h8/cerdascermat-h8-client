@@ -10,7 +10,9 @@ export default new Vuex.Store({
     playerName: '',
     questions: [],
     currentQuestion: 0,
-    currentScore: 0
+    currentScore: 0,
+    timer: null,
+    start: false
   },
   mutations: {
     setPlayerName (state, payload) {
@@ -93,6 +95,23 @@ export default new Vuex.Store({
         this.state.currentScore = 0
         router.push('/')
       }
+    },
+    countDown (context) {
+      context.dispatch('started')
+      var timeleft = 10
+      var Timer = setInterval(() => {
+        if (timeleft <= 0) {
+          clearInterval(Timer)
+          context.commit('setCurrentQuestion')
+          return context.dispatch('countDown')
+        } else {
+          this.state.timer = timeleft
+        }
+        timeleft -= 1
+      }, 1000)
+    },
+    started () {
+      this.state.start = true
     }
   },
   modules: {
