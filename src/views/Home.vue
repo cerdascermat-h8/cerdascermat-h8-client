@@ -1,5 +1,9 @@
 <template>
   <div class="home" >
+    <div>
+      <h3>Room name : General</h3>
+      <br>
+    </div>
     <form @submit.prevent="getPlayerName">
       <div class="form-group">
         <label for="payerNamme">Enter your name: </label>
