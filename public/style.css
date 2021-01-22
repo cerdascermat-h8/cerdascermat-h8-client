@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Yusei+Magic&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Yusei Magic", sans-serif;
+}
+body {
+  background-image: url("./img/bgimg.jpg");
+  background-size: cover;
+  background-position: center;
+}
+.bg {
+  width: 100%;
+  height: 100vh;
+}
+
+.player-timer {
+  position: relative;
+  top: 10vh;
+}
+#grup-player {
+  width: 50%;
+  text-align: center;
+}
+
+#image-player {
+  background-image: url("./img/manonly.svg");
+  width: 100px;
+  height: 200px;
+  background-size: cover;
+}
+#image-player1 {
+  background-image: url("./img/womanonly.svg");
+  width: 100px;
+  height: 200px;
+  background-size: cover;
+}
+#score-player {
+  width: 100%;
+  background-image: linear-gradient(
+    to right,
+    rgb(12, 100, 201),
+    rgb(253, 253, 253)
+  );
+}
+#score-player h2 {
+  text-align: center;
+}
+
+#question-answer-board {
+  position: relative;
+  width: 100%;
+  top: 15vh;
+  padding: 0;
+}
+
+#question {
+  position: relative;
+  background-color: rgb(230, 230, 230);
+}
+#question p {
+  font-size: auto;
+  text-align: center;
+}
+#answer {
+}
+#btn-answer {
+  width: 100%;
+  height: 5vh;
+  margin-top: 20px;
+}
+
+#btn-answer p {
+  font-size: auto;
+}
+#timer-board {
+  position: relative;
+  left: 20vh;
+  font-size: 10em;
+}
+
+#modal-img {
+  background-image: url(./img/trophy.svg);
+  width: 200px;
+  height: 200px;
+  background-size: cover;
+}
