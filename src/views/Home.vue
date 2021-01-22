@@ -7,7 +7,7 @@
     <form @submit.prevent="getPlayerName">
       <div class="form-group">
         <label for="payerNamme">Enter your name: </label>
-        <input v-model="playerName" type="text" class="form-control" id="payerNamme" aria-describedby="emailHelp" placeholder="Enter email">
+        <input v-model="playerName" type="text" class="form-control" id="payerNamme" aria-describedby="emailHelp" placeholder="create name room">
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
