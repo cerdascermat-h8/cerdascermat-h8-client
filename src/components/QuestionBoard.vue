@@ -1,34 +1,10 @@
 <template>
-  <!-- <div class="col">
-    <div class="row">
-      <div class="col-md-12">
-        Soal {{ getCurrentQuestion + 1 }}
-        <div class="row">
-          <div class="col-md-12">
-            {{ currentQuestion.question }}
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12">
-        <div class="row">
-          <div class="col-md-6" @click="selectAnswer('True')">
-            <button class="btn btn-primary"> True </button>
-          </div>
-          <div class="col-md-6" @click="selectAnswer('False')">
-            <button class="btn btn-primary"> False </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
   <div id="question-answer-board">
-    <div id="question" class="p-5">
+    <div id="question" class="p-5" v-if="currentQuestion">
       Question #{{ getCurrentQuestion + 1 }}
       <p>{{ currentQuestion.question }}</p>
     </div>
-    <div id="answer" class="row">
+    <div id="answer" class="row" v-if="currentQuestion">
       <div
         v-for="(option, idx) in getOptions"
         :key="idx" class="col-md-6"
@@ -44,6 +20,7 @@
 </template>
 
 <script>
+import Vue from 'vue'
 export default {
   name: 'QuestionBoard',
   data () {
@@ -61,9 +38,32 @@ export default {
       console.log(correctAnswer)
       if (correctAnswer === value) {
         this.$store.dispatch('setPlayerScore', 10)
+        this.$socket.emit('increaseScore', {
+          // name: this.playerName,
+          name: this.$store.state.playerName,
+          score: 10
+        })
+        // this.playerName = ''
       } else {
         this.$store.dispatch('setPlayerScoreMinus', 10)
+        this.$socket.emit('decreaseScore', {
+          // name: this.playerName,
+          name: this.$store.state.playerName,
+          score: 10
+        })
+        // this.playerName = ''
       }
+    }
+  },
+  sockets: {
+    gameOver (payload) {
+      console.log(payload)
+      Vue.swal({
+        title: 'Game Over',
+        text: payload,
+        icon: 'error'
+      })
+      this.$router.push('/')
     }
   },
   computed: {

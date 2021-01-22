@@ -7,10 +7,14 @@
       </div>
       <button type="submit" class="btn btn-primary">Submit</button>
     </form>
+    <div class="mt-3">
+      <button @click.prevent="aturanMain" class="btn btn-primary">Aturan Main</button>
+    </div>
   </div>
 </template>
 
 <script>
+import Vue from 'vue'
 
 export default {
   name: 'Home',
@@ -22,7 +26,23 @@ export default {
   methods: {
     getPlayerName () {
       this.$store.dispatch('handleSetPlayerName', this.playerName)
-      this.playerName = ''
+      this.$socket.emit('newPlayer', {
+        name: this.playerName,
+        score: 0
+      })
+    },
+    aturanMain () {
+      Vue.swal({
+        title: 'Aturan Main!',
+        text: 'Siapa cepat sampai ke pertanyaan ke 10 dan nilai diatas 50 dia menang!!',
+        icon: 'warning',
+        confirmButtonText: 'Cool'
+      })
+    }
+  },
+  sockets: {
+    init (payload) {
+      console.log(payload)
     }
   }
 }
