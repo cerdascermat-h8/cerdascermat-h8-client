@@ -82,12 +82,30 @@ export default new Vuex.Store({
       })
       console.log(this.state.currentQuestion)
       if (this.state.currentQuestion === 9) {
+        if (this.currentScore >= 50) {
+          Vue.swal({
+            title: 'Success',
+            text: `Your current score ${this.state.currentScore}`,
+            icon: 'success'
+          })
+          this._vm.$socket.emit('gameOver', {
+            playerName: this.state.playerName,
+            currentScore: this.state.currentScore
+          })
+          this.state.playerName = ''
+          this.state.currentScore = 0
+          router.push('/')
+        }
         Vue.swal({
-          title: 'Success',
-          text: `Your current score ${this.state.currentScore}`,
-          icon: 'success'
+          title: 'Error',
+          text: 'Wrong answer ez -10 pts',
+          icon: 'error',
+          toast: true,
+          position: 'top-end',
+          timer: 1500,
+          timerProgressBar: true,
+          showConfirmButton: false
         })
-        // (new Vue()).$socket.emit('gameOver', this.state.playerName)
         this._vm.$socket.emit('gameOver', {
           playerName: this.state.playerName,
           currentScore: this.state.currentScore
@@ -113,6 +131,20 @@ export default new Vuex.Store({
         showConfirmButton: false
       })
       if (this.state.currentQuestion === 9) {
+        if (this.currentScore >= 50) {
+          Vue.swal({
+            title: 'Success',
+            text: `Your current score ${this.state.currentScore}`,
+            icon: 'success'
+          })
+          this._vm.$socket.emit('gameOver', {
+            playerName: this.state.playerName,
+            currentScore: this.state.currentScore
+          })
+          this.state.playerName = ''
+          this.state.currentScore = 0
+          router.push('/')
+        }
         Vue.swal({
           title: 'Failed',
           text: `Your current score ${this.state.currentScore}`,
@@ -128,13 +160,16 @@ export default new Vuex.Store({
         router.push('/')
       }
     },
+    nextQuestion (context) {
+      context.commit('setCurrentQuestion')
+    },
     countDown (context) {
       context.dispatch('started')
       context.commit('setTimeLeft', 10)
       this.state.timerInstance = setInterval(() => {
         if (this.state.timeLeft <= 0) {
           clearInterval(this.state.timerInstance)
-          context.commit('setCurrentQuestion')
+          context.dispatch('nextQuestion')
           return context.dispatch('countDown')
         } else {
           context.commit('setTimer', this.state.timeLeft)
