@@ -1,26 +1,19 @@
 <template>
   <div class="d-flex flex-row player-timer">
           <div id="grup-player" class="d-flex flex-row">
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
+            <div v-for="(player, idx) in playerInfo" :key="idx">
+              <div id="player" class="mr-2" >
+                  <div id="nama"> <p>{{ player.playerName }}</p> </div>
                   <div id="image-player"></div>
-                  <div id="score-player"> <h2>{{ getScore }}</h2> </div>
+                  <div id="score-player"> <h2>{{ player.score }}</h2> </div>
+                  <!-- <div id="score-player"> <h2>{{ getScore }}</h2> </div> -->
               </div>
-              <div id="player" class="mr-2">
+            </div>
+              <!-- <div id="player" class="mr-2">
                   <div id="nama"> <p>nama</p> </div>
                   <div id="image-player1"></div>
                   <div id="score-player"> <h2>0</h2> </div>
-              </div>
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
-                  <div id="image-player"></div>
-                  <div id="score-player"> <h2>0</h2> </div>
-              </div>
-              <div id="player" class="mr-2">
-                  <div id="nama"> <p>nama</p> </div>
-                  <div id="image-player1"></div>
-                  <div id="score-player"> <h2>0</h2> </div>
-              </div>
+              </div> -->
           </div>
           <div id="timer-board">
               <div id="start-btn" v-if="getStart === false">
@@ -38,6 +31,7 @@ export default {
   name: 'PlayerCard',
   data () {
     return {
+      playerInfo: []
     }
   },
   computed: {
@@ -54,6 +48,11 @@ export default {
   methods: {
     countDown () {
       this.$store.dispatch('countDown')
+    }
+  },
+  sockets: {
+    playerInfo (payload) {
+      this.playerInfo = payload
     }
   }
 }

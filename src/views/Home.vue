@@ -22,7 +22,15 @@ export default {
   methods: {
     getPlayerName () {
       this.$store.dispatch('handleSetPlayerName', this.playerName)
-      this.playerName = ''
+      this.$socket.emit('newPlayer', {
+        name: this.playerName,
+        score: 0
+      })
+    }
+  },
+  sockets: {
+    init (payload) {
+      console.log(payload)
     }
   }
 }

@@ -43,11 +43,15 @@ export default new Vuex.Store({
     },
     decreaseTimeLeft (state) {
       state.timeLeft -= 1
+    },
+    resetCurrentQuestion (state) {
+      state.currentQuestion = 0
     }
   },
   actions: {
     handleSetPlayerName (context, payload) {
       context.commit('setPlayerName', payload)
+      context.commit('resetCurrentQuestion')
       router.push('/main')
     },
     fetchQuestions (context) {
@@ -83,6 +87,11 @@ export default new Vuex.Store({
           text: `Your current score ${this.state.currentScore}`,
           icon: 'success'
         })
+        // (new Vue()).$socket.emit('gameOver', this.state.playerName)
+        this._vm.$socket.emit('gameOver', {
+          playerName: this.state.playerName,
+          currentScore: this.state.currentScore
+        })
         this.state.playerName = ''
         this.state.currentScore = 0
         router.push('/')
@@ -105,9 +114,14 @@ export default new Vuex.Store({
       })
       if (this.state.currentQuestion === 9) {
         Vue.swal({
-          title: 'Success',
+          title: 'Failed',
           text: `Your current score ${this.state.currentScore}`,
-          icon: 'success'
+          icon: 'error'
+        })
+        // (new Vue()).$socket.emit('gameOver', this.state.playerName)
+        this._vm.$socket.emit('gameOver', {
+          playerName: this.state.playerName,
+          currentScore: this.state.currentScore
         })
         this.state.playerName = ''
         this.state.currentScore = 0
@@ -131,7 +145,16 @@ export default new Vuex.Store({
     started (context) {
       // this.state.start = true
       context.commit('setTimerStart', true)
+    },
+    SOCKET_init (context, payload) {
+      console.log('server gan')
+      console.log(payload)
     }
+    // },
+    // SOCKET_GAME_OVER (context, payload) {
+    //   console.log('ini emit')
+    //   this.$socket.emit()
+    // }
   },
   modules: {
   }
